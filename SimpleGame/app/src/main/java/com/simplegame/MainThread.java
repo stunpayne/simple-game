@@ -32,7 +32,7 @@ public class MainThread extends Thread
     public void run()
     {
         long startTime;
-        long timeMills = 1000 / MAX_FPS;
+        long timeMillis = 1000 / MAX_FPS;
         long waitTime;
         int frameCount = 0;
         long totalTime = 0;
@@ -69,12 +69,14 @@ public class MainThread extends Thread
                     }
                 }
             }
-            timeMills = (System.nanoTime() - startTime) / ONE_MILLION;
-            waitTime = targetTime - timeMills;
+            timeMillis = (System.nanoTime() - startTime) / ONE_MILLION;
+            waitTime = targetTime - timeMillis;
             try
             {
                 if (waitTime > 0)
                 {
+                    System.out.println("Frame CPU Idle Percentage Time: " + String.valueOf
+                            (100 * waitTime / targetTime));
                     sleep(waitTime);
                 }
             }
@@ -86,8 +88,9 @@ public class MainThread extends Thread
             totalTime += System.nanoTime() - startTime;
             frameCount++;
 
-            if(frameCount == MAX_FPS){
-                averageFPS = 1000/((totalTime/frameCount)/ONE_MILLION);
+            if (frameCount == MAX_FPS)
+            {
+                averageFPS = 1000 / ((totalTime / frameCount) / ONE_MILLION);
                 frameCount = 0;
                 totalTime = 0;
                 System.out.println(averageFPS);
