@@ -19,6 +19,11 @@ public class Obstacle implements GameObject
         this.color = color;
     }
 
+    public Rect getRectangle()
+    {
+        return rectangle;
+    }
+
     public boolean playerCollide(RectPlayer player)
     {
         if (rectangle.contains(player.getRectangle().left, player.getRectangle().top)
