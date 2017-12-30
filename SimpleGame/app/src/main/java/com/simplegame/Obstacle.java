@@ -11,12 +11,16 @@ import android.graphics.Rect;
 public class Obstacle implements GameObject
 {
     private Rect rectangle;
+    private Rect rectangle2;
+    private int rectHeight;
     private int color;
 
-    public Obstacle(Rect rectangle, int color)
+
+    public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap)
     {
-        this.rectangle = rectangle;
         this.color = color;
+        this.rectangle = new Rect(0, startY, startX, startY + rectHeight);
+        this.rectangle2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
     }
 
     public Rect getRectangle()
@@ -34,12 +38,20 @@ public class Obstacle implements GameObject
         return false;
     }
 
+    public void incrementY(float increment){
+        rectangle.top += increment;
+        rectangle.bottom += increment;
+        rectangle2.top += increment;
+        rectangle2.bottom += increment;
+    }
+
     @Override
     public void draw(Canvas canvas)
     {
         Paint paint = new Paint();
         paint.setColor(color);
         canvas.drawRect(rectangle, paint);
+        canvas.drawRect(rectangle2, paint);
     }
 
     @Override
